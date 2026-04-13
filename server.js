@@ -541,7 +541,8 @@ app.post('/api/mailing-list', (req, res) => {
 // AUTH ROUTES
 // ---------------------------------------------------------------------------
 app.get('/admin/login', (req, res) => {
-  const html = readTemplate('admin/login.html');
+  let html = readTemplate('admin/login.html');
+  html = html.replace('{{errorHtml}}', '');
   res.send(html);
 });
 
@@ -549,7 +550,8 @@ app.post('/admin/login', (req, res) => {
   const { username, password } = req.body;
   const user = queryOne("SELECT * FROM users WHERE username = ?", [username]);
   if (!user || !bcrypt.compareSync(password, user.password_hash)) {
-    const html = readTemplate('admin/login.html').replace('{{error}}', 'Invalid username or password');
+    let html = readTemplate('admin/login.html');
+    html = html.replace('{{errorHtml}}', '<p class="login-error">Invalid username or password</p>');
     return res.send(html);
   }
   req.session.user = { id: user.id, username: user.username, display_name: user.display_name, color: user.color, role: user.role };

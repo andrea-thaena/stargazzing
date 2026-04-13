@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(timeout 5 node server.js)",
+      "Bash(node:*)",
+      "Bash(lsof -ti:3000)",
+      "Bash(xargs kill:*)",
+      "Bash(PORT=3001 node -e \" const http = require\\('http'\\); const { spawn } = require\\('child_process'\\); const server = spawn\\('node', ['server.js'], { cwd: '/Users/andrea/stargazing', env: { ...process.env, PORT: '3001' } }\\); let output = ''; server.stdout.on\\('data', d => output += d\\); server.stderr.on\\('data', d => output += d\\); setTimeout\\(\\(\\) => { http.get\\('http://localhost:3001', res => { let body = ''; res.on\\('data', d => body += d\\); res.on\\('end', \\(\\) => { console.log\\('Status:', res.statusCode\\); console.log\\('Body length:', body.length\\); console.log\\('Has Stargazing:', body.includes\\('Stargazing'\\)\\); console.log\\('Has hero:', body.includes\\('hero-title'\\)\\); console.log\\('Has nav:', body.includes\\('nav-links'\\)\\); console.log\\('Has Mission Log:', body.includes\\('Mission Log'\\)\\); console.log\\('Server output:', output.trim\\(\\)\\); // Test other pages const pages = ['/music', '/shows', '/gallery', '/about']; let done = 0; pages.forEach\\(p => { http.get\\('http://localhost:3001' + p, r => { let b = ''; r.on\\('data', d => b += d\\); r.on\\('end', \\(\\) => { console.log\\(p + ':', r.statusCode, 'len=' + b.length\\); done++; if \\(done === pages.length\\) server.kill\\(\\); }\\); }\\); }\\); }\\); }\\); }, 2000\\); \")",
+      "Bash(lsof -ti:3001 -ti:3002)",
+      "Bash(npm start:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(brew install:*)",
+      "Bash(git remote:*)"
+    ]
+  }
+}
