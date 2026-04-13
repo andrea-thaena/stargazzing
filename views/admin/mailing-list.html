@@ -1,0 +1,15 @@
+<div class="admin-header">
+  <h1 class="admin-title">Mailing List</h1>
+  <a href="/admin/mailing-list/export" class="btn btn-outline">Export CSV</a>
+</div>
+
+<p style="margin-bottom:1rem"><span class="stat">{{count}}</span> <span class="text-muted">subscribers</span></p>
+
+<table class="admin-table">
+  <thead>
+    <tr><th>Email</th><th>Signed Up</th></tr>
+  </thead>
+  <tbody>
+    {{emailsHtml}}
+  </tbody>
+</table>

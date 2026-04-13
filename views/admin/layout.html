@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Stargazzing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@700&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="admin-body">
+  <nav class="admin-nav">
+    <a href="/admin" class="nav-brand" style="font-size:1.2rem">Stargazzing Admin</a>
+    <ul class="admin-nav-links">
+      <li><a href="/admin">Dashboard</a></li>
+      <li><a href="/admin/posts/new">New Post</a></li>
+      <li><a href="/admin/shows">Shows</a></li>
+      <li><a href="/admin/music">Music</a></li>
+      <li><a href="/admin/gallery">Gallery</a></li>
+      <li><a href="/admin/about">About</a></li>
+      <li><a href="/admin/profiles">Profiles</a></li>
+      <li><a href="/admin/mailing-list">Mailing List</a></li>
+      <li><a href="/admin/members">Members</a></li>
+      <li><a href="/" target="_blank">View Site</a></li>
+      <li><a href="/admin/logout">Logout</a></li>
+    </ul>
+  </nav>
+  <div class="admin-container">
+    {{content}}
+  </div>
+</body>
+</html>

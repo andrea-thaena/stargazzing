@@ -1,0 +1,31 @@
+<div class="admin-header">
+  <h1 class="admin-title">{{formTitle}}</h1>
+  <a href="/admin/members" class="btn btn-outline">Back</a>
+</div>
+
+<form method="POST" action="{{formAction}}" class="card" style="padding:1.5rem">
+  <div class="form-group">
+    <label>Username</label>
+    <input type="text" name="username" class="form-control" required value="{{username}}">
+  </div>
+  <div class="form-group">
+    <label>Password (leave blank to keep current)</label>
+    <input type="password" name="password" class="form-control" placeholder="••••••••">
+  </div>
+  <div class="form-group">
+    <label>Display Name</label>
+    <input type="text" name="display_name" class="form-control" required value="{{displayName}}">
+  </div>
+  <div class="form-group">
+    <label>Color</label>
+    <input type="color" name="color" class="form-control" value="{{color}}" style="height:40px;padding:4px">
+  </div>
+  <div class="form-group">
+    <label>Role</label>
+    <select name="role" class="form-control">
+      <option value="member" {{roleMember}}>Member</option>
+      <option value="admin" {{roleAdmin}}>Admin</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-pink">Save</button>
+</form>

@@ -1,0 +1,41 @@
+<div class="hero">
+  <div class="container">
+    <p class="hero-welcome">welcome to</p>
+    <h1 class="hero-title">Stargazzing</h1>
+    <p class="hero-tagline">a kids band from planet earth</p>
+  </div>
+</div>
+
+<div class="section">
+  <div class="container">
+    <h2 class="section-heading">Mission Log</h2>
+    <div class="section-divider"></div>
+    <div class="posts-feed">
+      {{postsHtml}}
+    </div>
+    {{paginationHtml}}
+  </div>
+</div>
+
+<div class="section" {{showsSection}}>
+  <div class="container">
+    <h2 class="section-heading">Upcoming Shows</h2>
+    <div class="section-divider"></div>
+    <div class="shows-row">
+      {{showsHtml}}
+    </div>
+    <div style="margin-top:1rem"><a href="/shows" class="btn btn-outline">All Shows &rarr;</a></div>
+  </div>
+</div>
+
+<div class="section mailing-section">
+  <div class="container">
+    <h2 class="section-heading">Join the Constellation</h2>
+    <p class="text-muted">Get updates from outer space</p>
+    <form class="mailing-form" id="mailingForm">
+      <input type="email" name="email" placeholder="your@email.com" required>
+      <button type="submit" class="btn btn-pink">Join</button>
+    </form>
+    <p class="mailing-success" id="mailingSuccess">You're in! Welcome to the constellation.</p>
+  </div>
+</div>

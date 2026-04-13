@@ -1,0 +1,32 @@
+<div class="admin-header">
+  <h1 class="admin-title">{{formTitle}}</h1>
+  <a href="/admin/music" class="btn btn-outline">Back</a>
+</div>
+
+<form method="POST" action="{{formAction}}" enctype="multipart/form-data" class="card" style="padding:1.5rem">
+  <div class="form-group">
+    <label>Title</label>
+    <input type="text" name="title" class="form-control" required value="{{title}}">
+  </div>
+  <div class="form-group">
+    <label>Description</label>
+    <textarea name="description" class="form-control" rows="3">{{description}}</textarea>
+  </div>
+  <div class="form-group">
+    <label>Embed URL (Spotify, Bandcamp, etc.)</label>
+    <input type="url" name="embed_url" class="form-control" placeholder="https://open.spotify.com/..." value="{{embedUrl}}">
+  </div>
+  <div class="form-group">
+    <label>OR Upload Audio File</label>
+    <input type="file" name="audio" class="form-control" accept="audio/*">
+  </div>
+  <div class="form-group">
+    <label>Cover Art Image</label>
+    <input type="file" name="cover" class="form-control" accept="image/*">
+  </div>
+  <div class="form-group">
+    <label>Release Date</label>
+    <input type="date" name="release_date" class="form-control" value="{{releaseDate}}">
+  </div>
+  <button type="submit" class="btn btn-pink">Save Track</button>
+</form>

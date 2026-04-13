@@ -1,0 +1,33 @@
+<h1 class="admin-title">Welcome, {{userName}}</h1>
+
+<div class="quick-actions">
+  <a href="/admin/posts/new" class="quick-action">
+    <span class="quick-action-icon">&#9998;</span>
+    New Post
+  </a>
+  <a href="/admin/shows/new" class="quick-action">
+    <span class="quick-action-icon">&#9733;</span>
+    New Show
+  </a>
+  <a href="/admin/music/new" class="quick-action">
+    <span class="quick-action-icon">&#9835;</span>
+    New Track
+  </a>
+  <a href="/admin/gallery/new" class="quick-action">
+    <span class="quick-action-icon">&#128247;</span>
+    New Photo/Video
+  </a>
+</div>
+
+<div class="admin-header">
+  <h2 class="admin-title">Recent Posts</h2>
+</div>
+
+<table class="admin-table">
+  <thead>
+    <tr><th>Author</th><th>Type</th><th>Content</th><th>Date</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    {{postsHtml}}
+  </tbody>
+</table>

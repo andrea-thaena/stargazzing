@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stargazzing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@700&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <canvas id="starfield"></canvas>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-brand">Stargazzing</a>
+      <button class="hamburger" aria-label="Menu">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="/" class="{{activeHome}}">Home</a></li>
+        <li><a href="/music" class="{{activeMusic}}">Music</a></li>
+        <li><a href="/shows" class="{{activeShows}}">Shows</a></li>
+        <li><a href="/gallery" class="{{activeGallery}}">Photos</a></li>
+        <li><a href="/about" class="{{activeAbout}}">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    {{content}}
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-links">
+        <a href="#" title="Instagram">&#9733;</a>
+        <a href="#" title="YouTube">&#9658;</a>
+        <a href="#" title="TikTok">&#9836;</a>
+      </div>
+      <p>&copy; 2026 Stargazzing</p>
+    </div>
+  </footer>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <button class="lightbox-nav lightbox-prev" aria-label="Previous">&lsaquo;</button>
+    <button class="lightbox-nav lightbox-next" aria-label="Next">&rsaquo;</button>
+    <img src="" alt="">
+    <div class="lightbox-caption"></div>
+  </div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
