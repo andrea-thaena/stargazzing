@@ -524,6 +524,8 @@ app.get('/about', (req, res) => {
 });
 
 // Mailing list signup
+const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz0IAi0hc3ms6rr9RVTPIhlUgo8TBkgAIS3Cqk8yclw4Jifi3uXNg0CaKmbgP_3_8f_/exec';
+
 app.post('/api/mailing-list', (req, res) => {
   const email = (req.body.email || '').trim().toLowerCase();
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -531,10 +533,16 @@ app.post('/api/mailing-list', (req, res) => {
   }
   try {
     run("INSERT OR IGNORE INTO mailing_list (email) VALUES (?)", [email]);
-    res.json({ ok: true });
   } catch (e) {
-    res.json({ ok: true }); // ignore duplicates
+    // ignore duplicates
   }
+  // Sync to Google Sheet (fire-and-forget so it doesn't slow down the response)
+  fetch(GOOGLE_SHEET_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email }),
+  }).catch(() => {});
+  res.json({ ok: true });
 });
 
 // ---------------------------------------------------------------------------
