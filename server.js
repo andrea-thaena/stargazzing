@@ -325,8 +325,11 @@ function requireAdmin(req, res, next) {
 // PUBLIC ROUTES
 // ---------------------------------------------------------------------------
 
-// Home
-app.get('/', (req, res) => {
+// Root → Powers Combined app; band homepage lives at /band
+app.get('/', (req, res) => res.redirect('/powers/'));
+
+// Band home
+app.get('/band', (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const perPage = 10;
   const offset = (page - 1) * perPage;
@@ -400,8 +403,8 @@ app.get('/', (req, res) => {
   }).join('\n');
 
   const paginationHtml = `<div class="pagination">
-    ${page > 1 ? `<a href="/?page=${page - 1}" class="btn btn-outline">← Newer</a>` : ''}
-    ${hasMore ? `<a href="/?page=${page + 1}" class="btn btn-outline">Older →</a>` : ''}
+    ${page > 1 ? `<a href="/band?page=${page - 1}" class="btn btn-outline">← Newer</a>` : ''}
+    ${hasMore ? `<a href="/band?page=${page + 1}" class="btn btn-outline">Older →</a>` : ''}
   </div>`;
 
   const html = render('home.html', {
