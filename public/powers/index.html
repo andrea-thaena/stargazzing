@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪐</text></svg>">
+<title>Powers Combined · Chart Your Working Self</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --space:#0d0a16; --plum:#1d1530;
+    --pink:#ff5fa2; --pink-soft:#ffa8cd; --gold:#e9b84f; --gold-soft:#f5d78a;
+    --iris:#b79df2; --aqua:#8fd8e8; --ink:#efe9f6; --dim:#a99cc0;
+    --card:rgba(29,21,48,.78); --line:rgba(233,184,79,.28);
+    color-scheme: dark;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--space);color:var(--ink);
+    font-family:"Avenir Next","Avenir",-apple-system,"Segoe UI",sans-serif;
+    font-size:17px;line-height:1.6;overflow-x:hidden;min-height:100vh}
+  #sky{position:fixed;inset:0;z-index:0;pointer-events:none}
+  .wrap{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:40px 22px 90px}
+
+  .display{font-family:"Futura","Avenir Next Condensed","Avenir Next",sans-serif;font-weight:800;
+    text-transform:uppercase;letter-spacing:.12em}
+  .script{font-family:"Snell Roundhand","Savoye LET",cursive;font-weight:700}
+  .eyebrow{letter-spacing:.4em;text-transform:uppercase;font-size:.7rem;color:var(--gold-soft)}
+
+  .screen{display:none;animation:rise .5s ease}
+  .screen.on{display:block}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){.screen{animation:none}#sky{display:none}}
+
+  h1{color:var(--pink);font-size:clamp(2rem,6.5vw,3.2rem);line-height:1.15;text-wrap:balance;
+    text-shadow:0 0 30px rgba(255,95,162,.45)}
+  h2.q{color:var(--gold);font-size:clamp(1.5rem,4.5vw,2.1rem);margin:6px 0 4px;text-wrap:balance}
+  .hint{color:var(--dim);font-size:.95rem;max-width:56ch}
+  .progress{color:var(--gold);letter-spacing:.35em;font-size:.8rem;margin-bottom:18px;min-height:1em}
+
+  textarea,input[type=text],select{width:100%;background:rgba(13,10,22,.7);color:var(--ink);
+    border:1px solid rgba(183,157,242,.3);border-radius:12px;padding:14px 16px;font:inherit;margin-top:16px}
+  textarea{min-height:130px;resize:vertical}
+  textarea:focus,input:focus,select:focus{outline:2px solid var(--pink);outline-offset:1px}
+  label.small{display:block;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-top:20px}
+
+  .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px;align-items:center}
+  button{font:inherit;cursor:pointer;border-radius:999px;padding:11px 26px;border:1px solid transparent;font-weight:600}
+  .btn-go{background:var(--pink);color:#1a0410}
+  .btn-go:hover{background:var(--pink-soft)}
+  .btn-ghost{background:transparent;color:var(--dim);border-color:rgba(169,156,192,.4)}
+  .btn-ghost:hover{color:var(--ink);border-color:var(--dim)}
+  .btn-gold{background:transparent;color:var(--gold-soft);border-color:var(--line)}
+  .btn-gold:hover{background:rgba(233,184,79,.12)}
+  button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+  .pairs{display:grid;gap:14px;margin-top:22px}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .pair button{border:1px solid rgba(183,157,242,.3);background:rgba(13,10,22,.6);color:var(--ink);
+    padding:14px 10px;border-radius:12px;font-weight:500}
+  .pair button.picked{border-color:var(--pink);background:rgba(255,95,162,.16);color:var(--pink-soft)}
+
+  .sel3{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:10px}
+
+  /* report */
+  .report section{margin-top:56px}
+  .report h3.sec{color:var(--gold);font-size:clamp(1.4rem,4vw,1.9rem)}
+  .rule{height:1px;background:linear-gradient(90deg,var(--line),transparent);margin:10px 0 18px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .chip{border:1px solid var(--line);border-radius:999px;padding:7px 16px;font-size:.85rem;background:rgba(13,10,22,.55)}
+  .chip b{color:var(--gold-soft);font-weight:600}
+  .card{background:var(--card);border:1px solid rgba(183,157,242,.16);border-radius:14px;padding:20px;margin-top:14px}
+  .card p{white-space:pre-wrap;font-size:.97rem}
+  .disc{margin-top:18px;border-radius:16px;padding:22px;text-align:center;
+    background:linear-gradient(135deg,rgba(233,184,79,.14),rgba(255,95,162,.12),rgba(183,157,242,.14));
+    border:1px dashed var(--gold)}
+  .disc .tag{display:inline-block;font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;
+    color:var(--space);background:var(--gold);border-radius:999px;padding:4px 12px;font-weight:700}
+  .disc ul{list-style:none;margin-top:14px;display:grid;gap:10px;text-align:left}
+  .disc li{padding-left:26px;position:relative;font-size:.94rem}
+  .disc li::before{content:"✦";position:absolute;left:0;color:var(--gold)}
+  .footer-note{margin-top:60px;text-align:center;color:var(--dim);font-size:.85rem}
+  .footer-note .script{color:var(--pink);font-size:1.4rem;display:block;margin-bottom:8px}
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--gold);color:#231803;
+    padding:10px 22px;border-radius:999px;font-weight:600;opacity:0;transition:opacity .3s;z-index:9;pointer-events:none}
+  .toast.show{opacity:1}
+  .privacy{margin-top:22px;font-size:.82rem;color:var(--dim);border:1px solid rgba(143,216,232,.25);
+    background:rgba(143,216,232,.06);border-radius:12px;padding:12px 16px}
+  .privacy b{color:var(--aqua)}
+</style>
+
+<canvas id="sky"></canvas>
+<div class="wrap">
+  <div class="progress" id="prog"></div>
+  <div id="app"></div>
+</div>
+<div class="toast" id="toast">Copied ✦</div>
+
+<script>
+/* ---------- starfield ---------- */
+(function(){
+  const c=document.getElementById('sky');const x=c.getContext('2d');
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let S=[],W,H;const COLORS=['#e9b84f','#ff5fa2','#b79df2','#8fd8e8','#fff'];
+  function rs(){W=c.width=innerWidth*devicePixelRatio;H=c.height=innerHeight*devicePixelRatio;
+    c.style.width=innerWidth+'px';c.style.height=innerHeight+'px';
+    S=Array.from({length:Math.min(220,innerWidth/4)},()=>({x:Math.random()*W,y:Math.random()*H,
+      r:(Math.random()*1.3+.3)*devicePixelRatio,tw:Math.random()*6.28,sp:.008+Math.random()*.02,
+      col:Math.random()<.8?'#fff':COLORS[Math.floor(Math.random()*5)]}));}
+  function dr(t){x.clearRect(0,0,W,H);
+    const g=x.createRadialGradient(W*.5,H*.2,0,W*.5,H*.2,H);
+    g.addColorStop(0,'#181126');g.addColorStop(1,'#0d0a16');x.fillStyle=g;x.fillRect(0,0,W,H);
+    for(const s of S){x.globalAlpha=reduced?.7:.35+.65*Math.abs(Math.sin(s.tw+t*s.sp));
+      x.fillStyle=s.col;x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fill();}
+    x.globalAlpha=1;if(!reduced)requestAnimationFrame(dr);}
+  addEventListener('resize',rs);rs();reduced?dr(0):requestAnimationFrame(dr);
+})();
+
+/* ---------- state ---------- */
+const KEY='powers-combined-v1';
+let state = JSON.parse(localStorage.getItem(KEY)||'{}');
+state.answers = state.answers||{}; state.pairs = state.pairs||{}; state.step = state.step||0;
+function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+
+const SIGNS=['—','Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+
+const LENSES=[
+ {k:'fire', title:'The Fire', q:'What work makes you lose track of time?',
+  hint:'The last time you looked up and two hours had vanished: what were you doing? Stories beat labels.'},
+ {k:'power', title:'Superpowers', q:'What are you unusually good at AND enjoy?',
+  hint:'What do people come to you for? What feels easy to you that seems hard for everyone else?'},
+ {k:'drain', title:'The Drains', q:'What are you good at but hate, or what quietly depletes you?',
+  hint:'The thing that, if it vanished from your plate tomorrow, would make you lighter. Be honest, nobody is grading.'},
+ {k:'blind', title:'Eclipses', q:'What throws you off track? Where do you get stuck?',
+  hint:'The pattern a friend or teammate would have to catch, because you cannot see it from inside.'},
+ {k:'edge', title:'Growth Edges', q:'What do you want to learn or get better at?',
+  hint:'The challenge that excites you, not the deficiency you feel guilty about.'},
+ {k:'work', title:'Mission Log', q:'How do you like to work and be asked for things?',
+  hint:'Deadlines or open space? Morning texts or long emails? Where do you need to make the call yourself?'},
+ {k:'wish', title:'The Robot Wishlist', q:'If a helpful AI took three things off your plate tomorrow, what would they be?',
+  hint:'Think about your business or your week. The boring stuff counts double.'}
+];
+
+const PAIRS=[
+ ['Morning ☀️','Night 🌙'],
+ ['Start things ✨','Finish things 🏁'],
+ ['Talk it out 🗣','Write it out ✍️'],
+ ['Plan it 🗺','Wing it 🪁'],
+ ['One big thing 🎯','Many threads 🕸']
+];
+
+/* steps: 0 welcome · 1 big three · 2-4 lens 1-3 · 5 rapid-fire · 6-9 lens 4-7 · 10 report */
+const TOTAL=11;
+const app=document.getElementById('app');
+const prog=document.getElementById('prog');
+
+function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function stars(n,of){ return '✦'.repeat(n)+'✧'.repeat(Math.max(0,of-n)); }
+
+function render(){
+  save();
+  const s=state.step;
+  prog.textContent = (s>0 && s<10) ? stars(s,9) : '';
+  if(s===0) return welcome();
+  if(s===1) return bigThree();
+  if(s===5) return rapidFire();
+  if(s===10) return report();
+  const idx = s<5 ? s-2 : s-3; /* lens index */
+  lens(idx);
+}
+
+function nav(back, nextLabel){
+  return `<div class="row">
+    ${back?'<button class="btn-ghost" onclick="go(-1)">← Back</button>':''}
+    <button class="btn-go" onclick="go(1)">${nextLabel||'Next ✦'}</button>
+    <button class="btn-ghost" onclick="go(1)">Skip this one</button>
+  </div>`;
+}
+function go(d){ state.step=Math.max(0,Math.min(10,state.step+d)); render(); scrollTo({top:0,behavior:'smooth'}); }
+
+function welcome(){
+  app.innerHTML=`<div class="screen on">
+    <div class="eyebrow">Powers Combined</div>
+    <h1 class="display">Chart Your Working Self</h1>
+    <p class="hint" style="margin-top:14px">A ~15 minute reflection that maps where your energy lives, your superpowers, your drains, your blind spots, and what an AI sidekick should take off your plate first. At the end you get a star chart you own, a portrait file you can download, and a ready-to-paste prompt that turns any AI assistant into your setup partner.</p>
+    <p class="hint" style="margin-top:10px">Rules of the sky: you own everything this makes. Skipping any question is a full, valid answer. Nothing is a score or a verdict, only a caricature you get to argue with.</p>
+    <label class="small">Your name</label>
+    <input type="text" id="f-name" value="${esc(state.name||'')}" placeholder="e.g. Mallory">
+    <label class="small">Your business or project (optional)</label>
+    <input type="text" id="f-biz" value="${esc(state.biz||'')}" placeholder="e.g. the flower studio">
+    <div class="privacy"><b>Private by design:</b> your answers never leave this page. They live only in your browser on this device. Download the file at the end to keep them.</div>
+    <div class="row">
+      <button class="btn-go" onclick="state.name=document.getElementById('f-name').value;state.biz=document.getElementById('f-biz').value;go(1)">Begin ✦</button>
+      ${state.answers.fire?'<button class="btn-gold" onclick="state.step=10;render()">Jump to my chart →</button>':''}
+    </div>
+  </div>`;
+}
+
+function bigThree(){
+  const b=state.big3||{};
+  app.innerHTML=`<div class="screen on">
+    <div class="eyebrow">Optional · game &amp; fantasy layer</div>
+    <h2 class="q script">Your sky big three</h2>
+    <p class="hint">If you know your astrology (Co-Star counts), add it and your chart gets a celestial overlay. Pure fun, zero destiny. Skip freely.</p>
+    <div class="sel3">
+      ${['sun','moon','rising'].map(k=>`
+        <div><label class="small">${k==='sun'?'☉ Sun':k==='moon'?'☽ Moon':'↑ Rising'}</label>
+        <select id="f-${k}">${SIGNS.map(s=>`<option ${b[k]===s?'selected':''}>${s}</option>`).join('')}</select></div>`).join('')}
+    </div>
+    <div class="row">
+      <button class="btn-ghost" onclick="go(-1)">← Back</button>
+      <button class="btn-go" onclick="state.big3={sun:val('f-sun'),moon:val('f-moon'),rising:val('f-rising')};go(1)">Next ✦</button>
+      <button class="btn-ghost" onclick="go(1)">Skip the sky</button>
+    </div>
+  </div>`;
+}
+function val(id){const v=document.getElementById(id).value;return v==='—'?'':v;}
+
+function lens(i){
+  const L=LENSES[i];
+  app.innerHTML=`<div class="screen on">
+    <div class="eyebrow">Lens ${i+1} of ${LENSES.length}</div>
+    <h2 class="q script">${L.title}</h2>
+    <p class="hint"><b style="color:var(--gold-soft)">${L.q}</b><br>${L.hint}</p>
+    <textarea id="f-ans" placeholder="Your words, any length. Fragments welcome.">${esc(state.answers[L.k]||'')}</textarea>
+    <div class="row">
+      <button class="btn-ghost" onclick="keep('${L.k}');go(-1)">← Back</button>
+      <button class="btn-go" onclick="keep('${L.k}');go(1)">Next ✦</button>
+      <button class="btn-ghost" onclick="keep('${L.k}');go(1)">Skip this one</button>
+    </div>
+  </div>`;
+}
+function keep(k){ state.answers[k]=document.getElementById('f-ans').value; save(); }
+
+function rapidFire(){
+  app.innerHTML=`<div class="screen on">
+    <div class="eyebrow">Halfway break · rapid fire</div>
+    <h2 class="q script">Ten seconds each</h2>
+    <p class="hint">Gut answers only. These become your operational big three.</p>
+    <div class="pairs">
+      ${PAIRS.map((p,i)=>`<div class="pair">
+        ${p.map((o,j)=>`<button class="${state.pairs[i]===j?'picked':''}" onclick="state.pairs[${i}]=${j};save();rapidFire()">${o}</button>`).join('')}
+      </div>`).join('')}
+    </div>
+    <div class="row">
+      <button class="btn-ghost" onclick="go(-1)">← Back</button>
+      <button class="btn-go" onclick="go(1)">Next ✦</button>
+    </div>
+  </div>`;
+}
+
+/* ---------- report ---------- */
+function opBig3(){
+  const p=state.pairs;
+  const sun = p[0]===0?'Morning worker':p[0]===1?'Night worker':null;
+  const moon = p[1]===0?'Starter':p[1]===1?'Finisher':null;
+  const rise = p[3]===0?'Planner':p[3]===1?'Winger':null;
+  return {sun,moon,rise};
+}
+function aiIdeas(){
+  const t=((state.answers.drain||'')+' '+(state.answers.wish||'')).toLowerCase();
+  const out=[];
+  const M=[
+    [/email|inbox|reply|respond/,'An email drafting partner: it writes the first draft of every reply, you edit and send.'],
+    [/invoice|bookkeep|receipt|tax|account|quickbooks|money|billing/,'A numbers tidier: monthly receipts and invoices summarized into one clean sheet you review in ten minutes.'],
+    [/social|content|post|instagram|market|caption|newsletter/,'A content co-writer: you voice-memo the idea, it returns three post drafts in your voice.'],
+    [/schedul|calendar|appoint|booking/,'A calendar wrangler: it drafts the back-and-forth scheduling messages you hate sending.'],
+    [/website|copy|listing|descrip/,'A copy polisher: product and site descriptions drafted from your bullet points.'],
+    [/organiz|file|folder|paper|admin|form/,'A paperwork librarian: name it, file it, find it later by asking in plain words.']
+  ];
+  for(const [re,idea] of M){ if(re.test(t)) out.push(idea); if(out.length>=3) break; }
+  while(out.length<3){
+    const fill=[
+      'A first-draft machine for whatever you write most: you never start from a blank page again.',
+      'A weekly recap ritual: paste your week in, get back what moved, what stalled, and the one thing to close next.',
+      'A decision shrinker: when something stalls, ask "what is the call I have not made?" and have it lay out the options.'
+    ][out.length];
+    out.push(fill);
+  }
+  return out.slice(0,3);
+}
+
+function md(){
+  const a=state.answers, b=state.big3||{}, o=opBig3();
+  const line=(t,v)=>v?`\n## ${t}\n${v}\n`:'';
+  return `# Self-Portrait: ${state.name||'Me'}
+*This is a snapshot and a caricature. Rewrite it any time. Argue with it. It is yours.*
+
+Date: ${new Date().toISOString().slice(0,10)}${state.biz?` · ${state.biz}`:''}
+${b.sun||b.moon||b.rising?`Sky big three: ☉ ${b.sun||'?'} · ☽ ${b.moon||'?'} · ↑ ${b.rising||'?'}`:''}
+${o.sun||o.moon||o.rise?`Operational big three: ${[o.sun,o.moon,o.rise].filter(Boolean).join(' · ')}`:''}
+${line('My fire',a.fire)}${line('My superpowers',a.power)}${line('My drains',a.drain)}${line('My blind spots (eclipses)',a.blind)}${line('My growth edges',a.edge)}${line('How to work with me',a.work)}${line('My robot wishlist',a.wish)}
+## First AI constellation (starter ideas)
+${aiIdeas().map(i=>'- '+i).join('\n')}
+`;
+}
+
+function claudePrompt(){
+  return `I just completed a "Powers Combined" self-portrait exercise. Below is my portrait. Please act as my thoughtful setup partner:
+
+1. MIRROR: Reflect back the patterns you see across my answers. Offer them as observations I can argue with, never verdicts. Ask me 2-3 follow-up questions, one at a time.
+2. REFINE: Help me tighten this into a one-page "working with me" doc I could share.
+3. BUILD PLAN: Based on my drains and robot wishlist, design my first three AI workflows${state.biz?` for ${state.biz}`:''}. For each: what it does, the smallest possible first step, and what I should NOT automate yet.
+4. RULES: I own this. Consent-first. If I skip a question, that is a full answer. No scores, no personality types.
+
+MY PORTRAIT:
+
+${md()}`;
+}
+
+function report(){
+  const a=state.answers, b=state.big3||{}, o=opBig3();
+  const sec=(title,body)=> body?`<section><h3 class="sec script">${title}</h3><div class="rule"></div><div class="card"><p>${esc(body)}</p></div></section>`:'';
+  app.innerHTML=`<div class="screen on report">
+    <div class="eyebrow">Powers Combined · charted ${new Date().toLocaleDateString()}</div>
+    <h1 class="display">${esc(state.name||'Your')}${state.name?'’s':''} Star Chart</h1>
+    ${state.biz?`<p class="hint" style="margin-top:6px">${esc(state.biz)} · a small business from planet earth</p>`:''}
+    <div class="chips">
+      ${b.sun?`<span class="chip">☉ <b>${b.sun}</b></span>`:''}
+      ${b.moon?`<span class="chip">☽ <b>${b.moon}</b></span>`:''}
+      ${b.rising?`<span class="chip">↑ <b>${b.rising}</b></span>`:''}
+      ${o.sun?`<span class="chip">☉ <b>${o.sun}</b></span>`:''}
+      ${o.moon?`<span class="chip">☽ <b>${o.moon}</b></span>`:''}
+      ${o.rise?`<span class="chip">↑ <b>${o.rise}</b></span>`:''}
+    </div>
+    ${sec('The Fire',a.fire)}
+    ${sec('Superpowers',a.power)}
+    ${sec('The Drains',a.drain)}
+    ${sec('Eclipses · Blind Spots',a.blind)}
+    ${sec('Growth Edges',a.edge)}
+    ${sec('Mission Log · How to Work With Me',a.work)}
+    ${sec('The Robot Wishlist',a.wish)}
+    <section>
+      <div class="disc">
+        <span class="tag">☄ First AI Constellation</span>
+        <ul>${aiIdeas().map(i=>`<li>${i}</li>`).join('')}</ul>
+        <p class="hint" style="margin-top:14px">These are starter stars, not homework. Copy the prompt below into Claude (or any AI assistant) and it will help you build the first one in an afternoon.</p>
+      </div>
+    </section>
+    <div class="row" style="margin-top:40px">
+      <button class="btn-go" onclick="dl()">Download my portrait (.md)</button>
+      <button class="btn-gold" onclick="cp()">Copy my Claude prompt</button>
+      <button class="btn-ghost" onclick="go(-1)">← Edit answers</button>
+      <button class="btn-ghost" onclick="if(confirm('Clear everything and start fresh?')){localStorage.removeItem(KEY);state={answers:{},pairs:{},step:0};render()}">Start over</button>
+    </div>
+    <div class="footer-note">
+      <span class="script">This is a snapshot and a caricature.</span>
+      Rewrite it any time. Argue with it. It is yours.<br>
+      <span style="letter-spacing:.5em;color:var(--gold)">★ ✦ ♬</span><br>
+      Powers Combined · made with love in the Stargazzing Observatory
+    </div>
+  </div>`;
+}
+
+function dl(){
+  const blob=new Blob([md()],{type:'text/markdown'});
+  const u=URL.createObjectURL(blob);
+  const el=document.createElement('a');
+  el.href=u; el.download=(state.name||'my')+'-self-portrait.md'; el.click();
+  URL.revokeObjectURL(u); toast('Downloaded ✦');
+}
+function cp(){
+  navigator.clipboard.writeText(claudePrompt()).then(()=>toast('Prompt copied ✦'),()=>toast('Copy failed, select manually'));
+}
+function toast(m){
+  const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),1800);
+}
+render();
+</script>
+</html>
