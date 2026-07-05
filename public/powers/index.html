@@ -77,6 +77,9 @@
   .disc ul{list-style:none;margin-top:14px;display:grid;gap:10px;text-align:left}
   .disc li{padding-left:26px;position:relative;font-size:.94rem}
   .disc li::before{content:"✦";position:absolute;left:0;color:var(--gold)}
+  .manifesto{max-width:62ch;color:var(--ink)}
+  .manifesto p{font-size:.97rem;color:var(--dim)}
+  .manifesto p+p{margin-top:1em}
   .footer-note{margin-top:60px;text-align:center;color:var(--dim);font-size:.85rem}
   .footer-note .script{color:var(--pink);font-size:1.4rem;display:block;margin-bottom:8px}
   .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--gold);color:#231803;
@@ -290,6 +293,9 @@ ${o.sun||o.moon||o.rise?`Operational big three: ${[o.sun,o.moon,o.rise].filter(B
 ${line('My fire',a.fire)}${line('My superpowers',a.power)}${line('My drains',a.drain)}${line('My blind spots (eclipses)',a.blind)}${line('My growth edges',a.edge)}${line('How to work with me',a.work)}${line('My robot wishlist',a.wish)}
 ## First AI constellation (starter ideas)
 ${aiIdeas().map(i=>'- '+i).join('\n')}
+
+---
+*Three complete endings, all opt-in: keep this private, hand it to your AI as a founding document, or share it with the people you work with. Principled AI takes the drains and leaves you the fire. This is a snapshot and a caricature: rewrite it any time.*
 `;
 }
 
@@ -335,7 +341,17 @@ function report(){
         <p class="hint" style="margin-top:14px">These are starter stars, not homework. Copy the prompt below into Claude (or any AI assistant) and it will help you build the first one in an afternoon.</p>
       </div>
     </section>
-    <div class="row" style="margin-top:40px">
+    <section>
+      <h3 class="sec script">A Note from the Observatory</h3>
+      <div class="rule"></div>
+      <div class="manifesto">
+        <p>People have always read themselves in the sky. Astrology survives not because the planets manage our calendars, but because we are narrative creatures: we know ourselves through stories, and a story needs a shape to argue with. That is all a chart is, here or anywhere. In many older ways of knowing, Sand Talk among them, you are not a category or a score. You are the custodian of your own story, and stories stay alive by being told, challenged, and retold.</p>
+        <p>The same rule governs the robots. Principled AI takes the drains and leaves you the fire. If a tool takes the work you love and hands you back more admin, it is pointed backwards. Your answers never left your browser, because a portrait of your inner workings belongs to you, not to a platform.</p>
+        <p>And a word about work. Most instruments that ask questions like these want to sand you into a more efficient worker. This one refuses the jigsaw. An ecosystem does not optimize its members: it lets niches overlap, keeps redundancy as resilience, and lets roles shift with the season. You are allowed to be uneconomical in the ways that make you alive.</p>
+      </div>
+    </section>
+    <p class="hint" style="margin-top:40px"><b style="color:var(--gold-soft)">Three complete endings, all opt-in:</b> keep this private. Hand it to your AI as a founding document. Or share it with the people you work with, so they can cover your eclipses while you cover theirs. Powers combined.</p>
+    <div class="row" style="margin-top:18px">
       <button class="btn-go" onclick="dl()">Download my portrait (.md)</button>
       <button class="btn-gold" onclick="cp()">Copy my Claude prompt</button>
       <button class="btn-ghost" onclick="go(-1)">← Edit answers</button>
